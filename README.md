@@ -4,7 +4,7 @@ This is a basic tree editor written in Javascript and [d3js](http://d3js.org/).
 
 The editor has a context menu for renaming, deleting and creating nodes. Right-click on a node to get the context menu for rename, delete and create.
 
-There are also buttons for saving the tree, downloading it, and uploading a saved version.
+There are also buttons for saving the tree, downloading it, uploading a saved version, and sort the nodes (alphabetical for now, frequency to come next).
 
 Dragging can be performed on any node other than root (flare).
 Dropping can be done on any node.
@@ -47,15 +47,3 @@ To upload a new tree file, first download an example json file by clicking the "
 
 Edit the file, then click "Upload JSON tree file" and select the new JSON file you edited.
 
-
-Based on https://gist.github.com/robschmuecker/7880033
-
-
-## License
-
-
-MIT License.
-
-## Contact
-
-Adam Feuer adam at adamfeuer.com or @adamfeuer
