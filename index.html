@@ -6,15 +6,39 @@
   <link rel="stylesheet" href="css/d3-context-menu.css" />
   <link rel="stylesheet" href="css/toastr.css" />
   <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
   <div class="row">
     <div class="large-10 columns">
-      <ul class="button-group radius even-3">
-        <li><a href="#" class="button small radius success" onclick="save_tree()">Save tree</a></li>
-        <li><a href="/tree/file" class="button small radius info">Download JSON tree file</a></li>
-        <li><a href="#" class="button small radius info" data-reveal-id="UploadFileModal">Upload JSON tree file</a></li>
+      <ul class="button-group">
+        <li>
+          <div href="#" class="btn success" onclick="save_tree()">Save tree</div>
+        </li>
+        <li>
+          <a href="/tree/file">
+            <div class="btn info">Download JSON tree file</div>
+          </a>
+        </li>
+        <li>
+          <div href="#" class="btn warning" data-reveal-id="UploadFileModal">Upload JSON tree file</div>
+        </li>
+        <li>
+          <label class="dropdown">
+            <div class="btn default">
+              Sort By
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <input type="checkbox" class="dd-input" id="test">
+            <ul class="dd-menu">
+              <li onclick="sortTreeByAlpha()">Alphabetical</li>
+              <li onclick="sortTreeByFrequency()">Frequency</li>
+            </ul>
+          </label>
+        </li>
       </ul>
     </div>
     <div class="large-2 columns">

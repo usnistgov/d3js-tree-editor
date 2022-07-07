@@ -7,6 +7,12 @@ var create_node_modal_active = false;
 var rename_node_modal_active = false;
 var create_node_parent = null;
 var node_to_rename = null;
+var sortedAlphabetically = false;
+
+var tree = d3.layout.tree()
+    .size([viewerHeight, viewerWidth]);
+var viewerWidth = $(document).width();
+var viewerHeight = $(document).height();
 
 function generateUUID() {
     var d = new Date().getTime();
@@ -86,6 +92,34 @@ function save_tree() {
     toastr.success('Tree saved.')
 }
 
+// sort the tree according to the node names
+// function sortTree() {
+//     tree.sort(function (a, b) {
+//         return a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1;
+//     });
+//     sortedAlphabetically = true;
+// }
+// Sort the tree initially incase the JSON isn't in a sorted order.
+// TODO : remove auto alphabetical sort and add toggle sort alpha or freq.
+// Also add listener to change of sort method
+
+function sortTreeByAlpha() {
+    tree.sort(function (a, b) {
+        if (sortedAlphabetically) {
+            return a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1;
+        } else {
+            return b.name.toLowerCase() < a.name.toLowerCase() ? 1 : -1;
+        }
+    });
+    sortedAlphabetically = !sortedAlphabetically;
+    outer_update(tree_root);
+    toastr.success('Tree sorted.')
+}
+
+function sortTreeByFrequency() {
+    alert("to be implemented");
+}
+
 outer_update = null;
 
 
@@ -105,13 +139,6 @@ treeJSON = d3.json("/tree", function (error, treeData) {
     var i = 0;
     var duration = 750;
     var root;
-
-    // size of the diagram
-    var viewerWidth = $(document).width();
-    var viewerHeight = $(document).height();
-
-    var tree = d3.layout.tree()
-        .size([viewerHeight, viewerWidth]);
 
     // define a d3 diagonal projection for use by the node paths later on.
     var diagonal = d3.svg.diagonal()
@@ -194,17 +221,7 @@ treeJSON = d3.json("/tree", function (error, treeData) {
     }
 
 
-    // sort the tree according to the node names
 
-    function sortTree() {
-        tree.sort(function (a, b) {
-            return b.name.toLowerCase() < a.name.toLowerCase() ? 1 : -1;
-        });
-    }
-    // Sort the tree initially incase the JSON isn't in a sorted order.
-    sortTree();
-
-    // TODO: Pan function, can be better implemented.
 
     function pan(domNode, direction) {
         var speed = panSpeed;
@@ -232,7 +249,6 @@ treeJSON = d3.json("/tree", function (error, treeData) {
     }
 
     // Define the zoom function for the zoomable tree
-
     function zoom() {
         svgGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }
@@ -362,7 +378,7 @@ treeJSON = d3.json("/tree", function (error, treeData) {
                 }
                 // Make sure that the node being added to is expanded so user can see added node is correctly moved
                 expand(selectedNode);
-                sortTree();
+                sortTreeByAlpha();
                 endDrag();
             } else {
                 endDrag();
