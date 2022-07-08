@@ -92,16 +92,6 @@ function save_tree() {
     toastr.success('Tree saved.')
 }
 
-// sort the tree according to the node names
-// function sortTree() {
-//     tree.sort(function (a, b) {
-//         return a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1;
-//     });
-//     sortedAlphabetically = true;
-// }
-// Sort the tree initially incase the JSON isn't in a sorted order.
-// TODO : remove auto alphabetical sort and add toggle sort alpha or freq.
-// Also add listener to change of sort method
 
 function sortTreeByAlpha() {
     tree.sort(function (a, b) {
@@ -117,6 +107,10 @@ function sortTreeByAlpha() {
 }
 
 function sortTreeByFrequency() {
+    alert("to be implemented");
+}
+
+function randomSort() {
     alert("to be implemented");
 }
 

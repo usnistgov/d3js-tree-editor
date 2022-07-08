@@ -36,8 +36,21 @@
             <ul class="dd-menu">
               <li onclick="sortTreeByAlpha()">Alphabetical</li>
               <li onclick="sortTreeByFrequency()">Frequency</li>
+              <li onclick="randomSort()">Random</li>
             </ul>
           </label>
+        </li>
+        <li>
+          <a>
+            <div class="btn default" id="input-threshold" class="btn defaut" onclick="displayInputRange()">
+              Threshold : <output id="amount">100</output>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+          </a>
+          <ul id="threshold" style="display:none" class="dd-menu">
+            <li><input id="rangeInput" type="range" value="100" min="0" max="100"
+                oninput="amount.value=rangeInput.value"></li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -139,6 +152,19 @@
         create_node();
       }
     });
+  </script>
+  <script>
+    function displayInputRange() {
+      if (document.getElementById('threshold').style.display === 'none') {
+        document.getElementById('threshold').style.display = 'block'
+      } else {
+        document.getElementById('threshold').style.display = 'none'
+      }
+    }
+  </script>
+  <script>
+    // TODO:  implement when input value change de show ou hide les noeuds
+
   </script>
 </body>
 
