@@ -43,13 +43,13 @@
         <li>
           <a>
             <div class="btn default" id="input-threshold" class="btn defaut" onclick="displayInputRange()">
-              Threshold : <output id="amount">100</output>
+              Threshold : <output id="amount">0</output>
               <i class="fa-solid fa-caret-down"></i>
             </div>
           </a>
           <ul id="threshold" style="display:none" class="dd-menu">
-            <li><input id="rangeInput" type="range" value="100" min="0" max="100"
-                oninput="amount.value=rangeInput.value"></li>
+            <li><input id="rangeInput" type="range" value="0" min="0" max="100"
+                oninput="amount.value=rangeInput.value;checkTree(rangeInput.value,'beginning')"></li>
           </ul>
         </li>
       </ul>
@@ -127,7 +127,7 @@
 
   <script src="js/vendor/underscore-min.js"></script>
   <script src="js/vendor/fastclick.js"></script>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="js/vendor/jquery.js"></script>
   <script src="js/foundation.min.js"></script>
   <script src="js/dndTree.js"></script>
@@ -163,8 +163,6 @@
     }
   </script>
   <script>
-    // TODO:  implement when input value change de show ou hide les noeuds
-
   </script>
 </body>
 

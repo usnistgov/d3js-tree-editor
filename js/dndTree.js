@@ -8,6 +8,7 @@ var rename_node_modal_active = false;
 var create_node_parent = null;
 var node_to_rename = null;
 var sortedAlphabetically = false;
+var sortedByFrequency = false;
 
 var tree = d3.layout.tree()
     .size([viewerHeight, viewerWidth]);
@@ -77,6 +78,7 @@ function save_tree() {
                 delete value.y;
                 delete value.id;
                 delete value.depth;
+                delete value.display;
                 if (cache.indexOf(value) !== -1) {
                     // Circular reference found, discard key
                     return;
@@ -93,6 +95,33 @@ function save_tree() {
 }
 
 
+function displayNode(tree, rangeInput) {
+    if (tree.frequency > rangeInput) {
+        tree.display = 'block';
+    } else {
+        tree.display = 'none';
+    }
+}
+
+function checkTree(rangeInput, tree) {
+    if (tree === "beginning") {
+        checkTree(rangeInput, tree_root);
+    }
+    if (tree.children) {
+        tree.children.forEach((child) => {
+            checkTree(rangeInput, child);
+        });
+        displayNode(tree, rangeInput);
+    } else {
+        if (tree.parent) {
+            displayNode(tree, rangeInput);
+        } else {
+            outer_update(tree_root);
+        }
+    }
+}
+
+
 function sortTreeByAlpha() {
     tree.sort(function (a, b) {
         if (sortedAlphabetically) {
@@ -103,15 +132,28 @@ function sortTreeByAlpha() {
     });
     sortedAlphabetically = !sortedAlphabetically;
     outer_update(tree_root);
-    toastr.success('Tree sorted.')
+    toastr.success('Tree sorted alpahabetically.');
 }
 
 function sortTreeByFrequency() {
-    alert("to be implemented");
+    tree.sort(function (a, b) {
+        if (sortedByFrequency) {
+            return a.frequency < b.frequency ? 1 : -1;
+        } else {
+            return b.frequency < a.frequency ? 1 : -1;
+        }
+    });
+    sortedByFrequency = !sortedByFrequency;
+    outer_update(tree_root);
+    toastr.success('Tree sorted by frequency.');
 }
 
 function randomSort() {
-    alert("to be implemented");
+    tree.sort(function (a, b) {
+        return 0.5 - Math.random();
+    });
+    outer_update(tree_root);
+    toastr.success('Random Tree.');
 }
 
 outer_update = null;
@@ -372,7 +414,6 @@ treeJSON = d3.json("/tree", function (error, treeData) {
                 }
                 // Make sure that the node being added to is expanded so user can see added node is correctly moved
                 expand(selectedNode);
-                sortTreeByAlpha();
                 endDrag();
             } else {
                 endDrag();
@@ -521,6 +562,9 @@ treeJSON = d3.json("/tree", function (error, treeData) {
         node = svgGroup.selectAll("g.node")
             .data(nodes, function (d) {
                 return d.id || (d.id = ++i);
+            })
+            .attr("fill", function (d) {
+                return d.display == "none" ? "red" : "black"
             });
 
         // Enter any new nodes at the parent's previous position.
