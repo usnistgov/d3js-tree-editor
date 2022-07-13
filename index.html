@@ -110,15 +110,13 @@
     <form action="/tree/file" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="large-12 columns">
-          <label>JSON tree file
-            <input type="file" name="graph.json" accept="application/json">
-          </label>
+          <input type="file" name="graph.json" accept="application/json">
         </div>
       </div>
       <div class="row">
         <div class="large-12 columns">
-          <a href="#" class="button info" onclick="close_modal()">Cancel</a>
-          <input type="submit" class="button success" value="Upload file">
+          <div href="#" class="btn danger" onclick="close_modal()">Cancel</div>
+          <input type="submit" class="btn success" value="Upload file">
         </div>
       </div>
     </form>
@@ -161,8 +159,6 @@
         document.getElementById('threshold').style.display = 'none'
       }
     }
-  </script>
-  <script>
   </script>
 </body>
 
